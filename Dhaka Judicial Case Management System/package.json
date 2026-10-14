@@ -1,0 +1,18 @@
+{
+  "name": "dhaka-judicial-case-management-system",
+  "version": "1.0.0",
+  "description": "A high-fidelity, premium Single Page Application for managing cases, courtrooms, and hearings in Dhaka courts.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y serve .",
+    "dev": "npx -y serve ."
+  },
+  "keywords": [
+    "case-management",
+    "judiciary",
+    "dhaka-courts",
+    "spa"
+  ],
+  "author": "Antigravity",
+  "license": "ISC"
+}

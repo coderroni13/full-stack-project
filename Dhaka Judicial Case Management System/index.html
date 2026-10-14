@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dhaka Judicial Case Management System</title>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Chart.js library via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- ====================================================
+       APPLICATION SIDEBAR
+       ==================================================== -->
+  <aside id="appSidebar" class="glass-panel">
+    <div class="sidebar-logo">
+      <i class="fas fa-balance-scale"></i>
+      <h1 data-i18n="appName">Dhaka Judicial Case Management</h1>
+    </div>
+    
+    <nav class="sidebar-menu">
+      <li class="nav-link active" data-target="dashboard">
+        <i class="fas fa-chart-pie"></i>
+        <span data-i18n="dashboard">Dashboard</span>
+      </li>
+      <li class="nav-link" data-target="cases">
+        <i class="fas fa-folder-open"></i>
+        <span data-i18n="caseRegistry">Case Registry</span>
+      </li>
+      <li class="nav-link" data-target="filing">
+        <i class="fas fa-file-signature"></i>
+        <span data-i18n="fileNewCase">File New Case</span>
+      </li>
+      <li class="nav-link" data-target="cause-list">
+        <i class="fas fa-calendar-alt"></i>
+        <span data-i18n="causeList">Daily Cause List</span>
+      </li>
+      <li class="nav-link" data-target="judges">
+        <i class="fas fa-gavel"></i>
+        <span data-i18n="judgesDirectory">Judges & Courtrooms</span>
+      </li>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="btn-ctrl" id="languageToggleBtn">
+        <i class="fas fa-globe"></i>
+        <span>বাংলা</span>
+      </button>
+      <button class="btn-ctrl" id="themeToggleBtn">
+        <i class="fas fa-sun"></i>
+        <span>Theme</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ====================================================
+       MAIN CONTENT CONTAINER
+       ==================================================== -->
+  <main id="appMain">
+    
+    <!-- APP HEADER -->
+    <header class="app-header">
+      <div class="header-title-container">
+        <h2 id="headerTitle" data-i18n="appName">Dhaka Judicial Case Management System</h2>
+        <p id="headerSubtitle" class="text-sub">Dhaka District Judiciary System Portal</p>
+      </div>
+    </header>
+
+    <!-- ====================================================
+         VIEW 1: DASHBOARD
+         ==================================================== -->
+    <section id="dashboard-view" class="view-section">
+      <!-- KPI Cards Grid -->
+      <div class="kpi-grid">
+        <div class="kpi-card glass-panel kpi-total animate-scale">
+          <div class="kpi-icon"><i class="fas fa-archive"></i></div>
+          <div class="kpi-info">
+            <h4 data-i18n="totalCases">Total Cases</h4>
+            <div class="kpi-value" id="kpiTotalCases">0</div>
+          </div>
+        </div>
+        <div class="kpi-card glass-panel kpi-active animate-scale">
+          <div class="kpi-icon"><i class="fas fa-hourglass-half"></i></div>
+          <div class="kpi-info">
+            <h4 data-i18n="activeCases">Active Cases</h4>
+            <div class="kpi-value" id="kpiActiveCases">0</div>
+          </div>
+        </div>
+        <div class="kpi-card glass-panel kpi-disposed animate-scale">
+          <div class="kpi-icon"><i class="fas fa-check-double"></i></div>
+          <div class="kpi-info">
+            <h4 data-i18n="disposedCases">Disposed Cases</h4>
+            <div class="kpi-value" id="kpiDisposedCases">0</div>
+          </div>
+        </div>
+        <div class="kpi-card glass-panel kpi-today animate-scale">
+          <div class="kpi-icon"><i class="fas fa-calendar-check"></i></div>
+          <div class="kpi-info">
+            <h4 data-i18n="todayHearings">Today's Hearings</h4>
+            <div class="kpi-value" id="kpiTodayHearings">0</div>
+          </div>
+        </div>
+        <div class="kpi-card glass-panel kpi-backlog animate-scale">
+          <div class="kpi-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="kpi-info">
+            <h4 data-i18n="backlogRate">Backlog Rate</h4>
+            <div class="kpi-value" id="kpiBacklogRate">0%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="charts-grid">
+        <div class="chart-card glass-panel">
+          <h3><i class="fas fa-chart-donut icon-dim"></i> <span data-i18n="status">Case Status</span></h3>
+          <div class="chart-container">
+            <canvas id="statusChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card glass-panel">
+          <h3><i class="fas fa-chart-bar icon-dim"></i> <span data-i18n="courtName">Case Distribution by Court</span></h3>
+          <div class="chart-container">
+            <canvas id="courtChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Court Status / Ongoing Hearings Panel -->
+      <div class="dashboard-row">
+        <div class="live-feed-card glass-panel">
+          <div class="card-header-with-action">
+            <h3>
+              <span class="live-pulse"></span>
+              <span data-i18n="activeHearings">Live Courtroom Sessions</span>
+            </h3>
+          </div>
+          <div class="table-responsive">
+            <table class="table-custom">
+              <thead>
+                <tr>
+                  <th data-i18n="judgeName">Assigned Judge</th>
+                  <th data-i18n="caseNumber">Case Number</th>
+                  <th data-i18n="status">Status</th>
+                </tr>
+              </thead>
+              <tbody id="liveCourtroomStatus">
+                <!-- Loaded dynamically by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         VIEW 2: CASE REGISTRY
+         ==================================================== -->
+    <section id="cases-view" class="view-section hidden">
+      <!-- Search, filter and sorting headers -->
+      <div class="registry-controls glass-panel">
+        <div class="search-wrapper">
+          <i class="fas fa-search"></i>
+          <input type="search" id="caseSearchInput" data-i18n="searchPlaceholder" placeholder="Search by case number, parties, or judge...">
+        </div>
+        <div class="filter-wrapper">
+          <select id="filterCourt">
+            <option value="all" data-i18n="allCourts">All Courts</option>
+            <option value="courtDistrict" data-i18n="courtDistrict">District & Sessions Judge Court</option>
+            <option value="courtMetropolitan" data-i18n="courtMetropolitan">Metropolitan Sessions Judge Court</option>
+            <option value="courtCMM" data-i18n="courtCMM">Chief Metropolitan Magistrate Court</option>
+            <option value="courtCJM" data-i18n="courtCJM">Chief Judicial Magistrate Court</option>
+          </select>
+        </div>
+        <div class="filter-wrapper">
+          <select id="filterCategory">
+            <option value="all" data-i18n="filterCategory">All Categories</option>
+            <option value="civil" data-i18n="civil">Civil</option>
+            <option value="criminal" data-i18n="criminal">Criminal</option>
+            <option value="family" data-i18n="family">Family</option>
+            <option value="writ" data-i18n="writ">Writ</option>
+          </select>
+        </div>
+        <div class="filter-wrapper">
+          <select id="filterStatus">
+            <option value="all" data-i18n="allStatuses">All Statuses</option>
+            <option value="pending" data-i18n="pending">Pending</option>
+            <option value="underTrial" data-i18n="underTrial">Under Trial</option>
+            <option value="disposed" data-i18n="disposed">Disposed</option>
+            <option value="stayed" data-i18n="stayed">Stayed</option>
+            <option value="appealed" data-i18n="appealed">Appealed</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Case Registry Table -->
+      <div class="glass-panel table-responsive">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th data-i18n="caseNumber">Case Number</th>
+              <th data-i18n="complainant">Parties</th>
+              <th data-i18n="courtName">Court</th>
+              <th data-i18n="caseCategory">Category</th>
+              <th data-i18n="judgeName">Judge</th>
+              <th data-i18n="nextHearingDate">Next Hearing Date</th>
+              <th data-i18n="status">Status</th>
+            </tr>
+          </thead>
+          <tbody id="caseRegistryTableBody">
+            <!-- Loaded dynamically by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         VIEW 3: NEW CASE FILING
+         ==================================================== -->
+    <section id="filing-view" class="view-section hidden">
+      <div class="form-card glass-panel">
+        <form id="fileCaseForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="fileCategory"><i class="fas fa-tags"></i> <span data-i18n="caseCategory">Case Category</span></label>
+              <select id="fileCategory" class="form-control" required>
+                <option value="civil" data-i18n="civil">Civil</option>
+                <option value="criminal" data-i18n="criminal">Criminal</option>
+                <option value="family" data-i18n="family">Family</option>
+                <option value="writ" data-i18n="writ">Writ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="fileCourt"><i class="fas fa-gavel"></i> <span data-i18n="courtName">Court Name</span></label>
+              <select id="fileCourt" class="form-control" required>
+                <option value="courtDistrict" data-i18n="courtDistrict">District & Sessions Judge Court</option>
+                <option value="courtMetropolitan" data-i18n="courtMetropolitan">Metropolitan Sessions Judge Court</option>
+                <option value="courtCMM" data-i18n="courtCMM">Chief Metropolitan Magistrate Court</option>
+                <option value="courtCJM" data-i18n="courtCJM">Chief Judicial Magistrate Court</option>
+              </select>
+            </div>
+            
+            <div class="form-group form-group-full">
+              <label for="fileJudge"><i class="fas fa-user-shield"></i> <span data-i18n="judgeName">Assigned Judge</span></label>
+              <select id="fileJudge" class="form-control" required>
+                <!-- Loaded dynamically from data.js -->
+              </select>
+            </div>
+
+            <!-- Plaintiff En & Bn -->
+            <div class="form-group">
+              <label for="fileCompEn"><i class="fas fa-user"></i> <span>Plaintiff/Complainant (English)</span></label>
+              <input type="text" id="fileCompEn" class="form-control" placeholder="e.g. Md. Abdul Jalil" required>
+            </div>
+            <div class="form-group">
+              <label for="fileCompBn"><i class="fas fa-user"></i> <span>বাদী / নালিশকারী (বাংলা)</span></label>
+              <input type="text" id="fileCompBn" class="form-control" placeholder="যেমনঃ মোঃ আব্দুল জলিল" required>
+            </div>
+
+            <!-- Accused En & Bn -->
+            <div class="form-group">
+              <label for="fileAccEn"><i class="fas fa-user-slash"></i> <span>Accused/Defendant (English)</span></label>
+              <input type="text" id="fileAccEn" class="form-control" placeholder="e.g. Rahim Uddin" required>
+            </div>
+            <div class="form-group">
+              <label for="fileAccBn"><i class="fas fa-user-slash"></i> <span>বিবাদী / আসামি (বাংলা)</span></label>
+              <input type="text" id="fileAccBn" class="form-control" placeholder="যেমনঃ রহিম উদ্দিন" required>
+            </div>
+
+            <!-- Date parameters -->
+            <div class="form-group">
+              <label for="fileDate"><i class="fas fa-calendar-plus"></i> <span data-i18n="filingDate">Filing Date</span></label>
+              <input type="date" id="fileDate" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="fileHearingDate"><i class="fas fa-calendar-day"></i> <span data-i18n="nextHearingDate">First Hearing Date</span></label>
+              <input type="date" id="fileHearingDate" class="form-control" required>
+            </div>
+
+            <!-- Representation -->
+            <div class="form-group">
+              <label for="fileLawyerPEn"><i class="fas fa-user-tie"></i> <span>Plaintiff's Lawyer (English)</span></label>
+              <input type="text" id="fileLawyerPEn" class="form-control" placeholder="e.g. Adv. Kamal Hossain" required>
+            </div>
+            <div class="form-group">
+              <label for="fileLawyerPBn"><i class="fas fa-user-tie"></i> <span>বাদীর আইনজীবী (বাংলা)</span></label>
+              <input type="text" id="fileLawyerPBn" class="form-control" placeholder="যেমনঃ এডভোকেট কামাল হোসেন" required>
+            </div>
+            <div class="form-group">
+              <label for="fileLawyerDEn"><i class="fas fa-user-tie"></i> <span>Defendant's Lawyer (English)</span></label>
+              <input type="text" id="fileLawyerDEn" class="form-control" placeholder="e.g. Adv. Ehsanul Huq" required>
+            </div>
+            <div class="form-group">
+              <label for="fileLawyerDBn"><i class="fas fa-user-tie"></i> <span>বিবাদীর আইনজীবী (বাংলা)</span></label>
+              <input type="text" id="fileLawyerDBn" class="form-control" placeholder="যেমনঃ এডভোকেট এহসানুল হক" required>
+            </div>
+
+            <!-- Descriptions -->
+            <div class="form-group form-group-full">
+              <label for="fileDescEn"><i class="fas fa-edit"></i> <span>Case Description / Claim Details (English)</span></label>
+              <textarea id="fileDescEn" class="form-control" rows="4" placeholder="Describe the dispute or charges in detail..." required></textarea>
+            </div>
+            <div class="form-group form-group-full">
+              <label for="fileDescBn"><i class="fas fa-edit"></i> <span>মামলার সংক্ষিপ্ত বিবরণ (বাংলা)</span></label>
+              <textarea id="fileDescBn" class="form-control" rows="4" placeholder="বিরোধ বা দায়েরকৃত অভিযোগের সংক্ষিপ্ত বিবরণ লিখুন..." required></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="navigateTo('cases')" data-i18n="cancel">Cancel</button>
+            <button type="submit" class="btn-primary" data-i18n="save">Save Case Record</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         VIEW 4: DAILY CAUSE LIST
+         ==================================================== -->
+    <section id="cause-list-view" class="view-section hidden">
+      <!-- Cause list control panel -->
+      <div class="registry-controls glass-panel">
+        <div class="filter-wrapper">
+          <label class="text-sub font-semibold" style="margin-right: 8px;" data-i18n="selectDate">Select Date</label>
+          <input type="date" id="causeListDatePicker" class="form-control" style="display:inline-block; width:auto; padding: 8px 16px;">
+        </div>
+        <div class="filter-wrapper">
+          <select id="causeListCourtFilter">
+            <option value="all" data-i18n="allCourts">All Courts</option>
+            <option value="courtDistrict" data-i18n="courtDistrict">District & Sessions Judge Court</option>
+            <option value="courtMetropolitan" data-i18n="courtMetropolitan">Metropolitan Sessions Judge Court</option>
+            <option value="courtCMM" data-i18n="courtCMM">Chief Metropolitan Magistrate Court</option>
+            <option value="courtCJM" data-i18n="courtCJM">Chief Judicial Magistrate Court</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Cause List Table -->
+      <div class="glass-panel table-responsive">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th style="width: 80px;" data-i18n="serialNumber">SL No.</th>
+              <th data-i18n="caseNumber">Case Number</th>
+              <th data-i18n="complainant">Parties</th>
+              <th data-i18n="judgeName">Presiding Judge</th>
+              <th data-i18n="courtRoom">Courtroom</th>
+              <th data-i18n="purpose">Purpose of Hearing</th>
+            </tr>
+          </thead>
+          <tbody id="causeListTableBody">
+            <!-- Loaded dynamically by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         VIEW 5: JUDGES DIRECTORY
+         ==================================================== -->
+    <section id="judges-view" class="view-section hidden">
+      <div class="judges-grid" id="judgesGridContainer">
+        <!-- Loaded dynamically by JS -->
+      </div>
+    </section>
+
+    <!-- ====================================================
+         VIEW 6: CASE DETAIL & MANAGEMENT
+         ==================================================== -->
+    <section id="case-detail-view" class="view-section hidden">
+      <!-- Case detail head card -->
+      <div class="detail-header-card glass-panel">
+        <div class="detail-header-flex">
+          <div class="detail-title-block">
+            <h3 id="detailCaseNumber">Case Number</h3>
+            <p><span data-i18n="courtName">Court</span>: <strong id="detailCourt">Court Name</strong></p>
+          </div>
+          <div class="detail-badge-group">
+            <div id="detailCategory">Category</div>
+            <div id="detailStatus" class="status-badge">Status</div>
+          </div>
+          <div class="detail-actions-top">
+            <button class="btn-secondary" onclick="navigateTo('cases')">
+              <i class="fas fa-arrow-left"></i>
+              <span data-i18n="backToList">Back to List</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detail Grid Layout -->
+      <div class="grid-details-layout">
+        
+        <!-- Left Side: Basic Info, Description, Lawyer records -->
+        <div class="left-col-detail-cards">
+          <div class="detail-card glass-panel">
+            <h4><i class="fas fa-info-circle"></i> <span data-i18n="caseRegistry">Case Information</span></h4>
+            <div class="details-list-grid">
+              <div class="detail-item-col">
+                <span class="label" data-i18n="complainant">Complainant / Plaintiff</span>
+                <span class="value" id="detailComplainant">Complainant</span>
+              </div>
+              <div class="detail-item-col">
+                <span class="label" data-i18n="accused">Accused / Defendant</span>
+                <span class="value" id="detailAccused">Accused</span>
+              </div>
+              <div class="detail-item-col">
+                <span class="label" data-i18n="filingDate">Filing Date</span>
+                <span class="value" id="detailFilingDate">Filing Date</span>
+              </div>
+              <div class="detail-item-col">
+                <span class="label" data-i18n="nextHearingDate">Next Hearing Date</span>
+                <span class="value font-semibold" id="detailNextHearing">Next Hearing Date</span>
+              </div>
+              <div class="detail-item-col full-width">
+                <span class="label" data-i18n="details">Description</span>
+                <p class="value" id="detailDescription" style="line-height: 1.6; color: var(--text-secondary);"></p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Representation Column -->
+          <div class="detail-card glass-panel" style="margin-top: 24px;">
+            <h4><i class="fas fa-user-friends"></i> <span data-i18n="lawyers">Legal Representation</span></h4>
+            <div class="details-list-grid">
+              <div class="lawyer-card-box">
+                <strong data-i18n="lawyerPlaintiff">Plaintiff's Lawyer</strong>
+                <span id="detailLawyerP">Lawyer Name</span>
+              </div>
+              <div class="lawyer-card-box">
+                <strong data-i18n="lawyerDefendant">Defendant's Lawyer</strong>
+                <span id="detailLawyerD">Lawyer Name</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Add Milestone / Reschedule Form Panel -->
+          <div class="hearing-action-card glass-panel" style="margin-top: 24px;">
+            <h4 style="font-size: 16px; font-weight:700; color:var(--accent); border-bottom: 1px solid var(--panel-border); padding-bottom:12px; margin-bottom: 20px;">
+              <i class="fas fa-calendar-plus"></i>
+              <span data-i18n="addHearing">Update Case Progress & Hearings</span>
+            </h4>
+            <form id="addHearingForm">
+              <div class="form-grid" style="margin-bottom: 20px;">
+                <!-- Purpose En / Bn -->
+                <div class="form-group">
+                  <label for="hearingPurposeEn">Hearing Purpose (English)</label>
+                  <input type="text" id="hearingPurposeEn" class="form-control" placeholder="e.g. Charge framing, Cross examination" required>
+                </div>
+                <div class="form-group">
+                  <label for="hearingPurposeBn">শুনানির উদ্দেশ্য (বাংলা)</label>
+                  <input type="text" id="hearingPurposeBn" class="form-control" placeholder="যেমনঃ অভিযোগ গঠন, জেরা গ্রহণ" required>
+                </div>
+
+                <!-- Outcome En / Bn -->
+                <div class="form-group">
+                  <label for="hearingOutcomeEn">Outcome / Orders passed (English)</label>
+                  <input type="text" id="hearingOutcomeEn" class="form-control" placeholder="e.g. Adjourned due to absence of witness" required>
+                </div>
+                <div class="form-group">
+                  <label for="hearingOutcomeBn">শুনানির ফলাফল / আদালত আদেশ (বাংলা)</label>
+                  <input type="text" id="hearingOutcomeBn" class="form-control" placeholder="যেমনঃ সাক্ষী অনুপস্থিত থাকায় শুনানি স্থগিত" required>
+                </div>
+
+                <!-- Next hearing date & status updates -->
+                <div class="form-group">
+                  <label for="hearingNextDate" data-i18n="nextHearingDate">Next Hearing Date</label>
+                  <input type="date" id="hearingNextDate" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="hearingStatusUpdate" data-i18n="status">Case Status</label>
+                  <select id="hearingStatusUpdate" class="form-control" required>
+                    <option value="underTrial" data-i18n="underTrial">Under Trial</option>
+                    <option value="pending" data-i18n="pending">Pending</option>
+                    <option value="disposed" data-i18n="disposed">Disposed</option>
+                    <option value="stayed" data-i18n="stayed">Stayed</option>
+                    <option value="appealed" data-i18n="appealed">Appealed</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn-primary" data-i18n="save">Update Case History</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right Side: Presiding Judge Profile & Case Milestones History -->
+        <div class="right-col-detail-cards">
+          <!-- Presiding Judge Panel -->
+          <div class="detail-card glass-panel" style="padding: 20px;">
+            <h4 style="border-bottom: 1px solid var(--panel-border); padding-bottom: 12px; margin-bottom: 16px;"><i class="fas fa-user-tie"></i> <span data-i18n="judgeName">Presiding Judge</span></h4>
+            <div class="judge-cell" style="margin-bottom: 12px;">
+              <div class="judge-avatar" style="width: 44px; height: 44px; font-size: 18px;"><i class="fas fa-user-tie"></i></div>
+              <div>
+                <strong id="detailJudgeName">Judge Name</strong>
+                <span class="text-sub font-sm" id="detailJudgeRoom" style="display:block; margin-top:2px;">Room</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- History Timeline Panel -->
+          <div class="detail-card glass-panel" style="margin-top: 24px;">
+            <h4><i class="fas fa-history"></i> <span data-i18n="timeline">Case Milestones Timeline</span></h4>
+            <div id="caseHistoryTimeline">
+              <!-- Loaded dynamically by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================
+       APPLICATION JAVASCRIPT FILES
+       ==================================================== -->
+  <script src="js/i18n.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
