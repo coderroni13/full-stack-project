@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PureHarvest Organics | Farm-to-Table Artisanal Organic Fruits</title>
+  <meta name="description" content="Shop 100% USDA Certified Organic, tree-ripened heritage fruits harvested daily from regenerative family orchards and delivered cold-fresh within 24 hours.">
+  <meta name="keywords" content="organic fruits, farm to table, wild blueberries, rainier cherries, blood oranges, organic fruit subscription, non-gmo, regenerative agriculture">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232d7a52'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z'/></svg>">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <aside class="announcement-bar" aria-label="Special Offers">
+    <span>🌿 <strong>Peak Season Harvest:</strong> Free Cold-Chain Delivery on orders over $50</span>
+    <span class="badge">Code: FRESH20 for 20% OFF</span>
+  </aside>
+
+  <!-- Sticky Main Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="container">
+      <div class="nav-wrapper">
+        <!-- Brand Logo -->
+        <a href="#" class="brand-logo" aria-label="PureHarvest Organics Home">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M12 8a3 3 0 1 0 0 6 3 3 0 1 0 0-6z"></path>
+          </svg>
+          <span>Pure<span class="highlight">Harvest</span></span>
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <nav class="nav-links" id="navLinks">
+          <a href="#products" class="nav-link active">Fresh Harvest</a>
+          <a href="#box-builder" class="nav-link">Custom Box Builder</a>
+          <a href="#traceability" class="nav-link">Farm Passport</a>
+          <a href="#our-story" class="nav-link">Why PureHarvest</a>
+          <a href="#reviews" class="nav-link">Reviews</a>
+        </nav>
+
+        <!-- Right Header Actions -->
+        <div class="nav-actions">
+          <!-- Search Button -->
+          <button class="nav-icon-btn" data-open-search title="Search fruits (Ctrl+K or /)" data-i18n-title="searchTooltip" aria-label="Search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
+
+          <!-- Wishlist Indicator -->
+          <button class="nav-icon-btn" onclick="window.app.showToast('Wishlist items highlighted in your catalog! ❤️', 'info')" title="Saved Wishlist" data-i18n-title="wishlistTooltip" aria-label="Wishlist">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            <span class="badge-count wishlist-count-badge" style="display: none;">0</span>
+          </button>
+
+          <!-- Cart Drawer Trigger Button -->
+          <button class="nav-icon-btn" data-open-cart title="View shopping basket" data-i18n-title="cartTooltip" aria-label="Shopping Cart">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <span class="badge-count cart-count-badge" style="display: none;">0</span>
+          </button>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            <span data-i18n="heroBadge">100% Tree-Ripened &bull; Harvested This Morning</span>
+          </div>
+          <h1 class="hero-title">
+            <span data-i18n="heroTitlePrefix">Artisanal Organic Fruits,</span> <br>
+            <span class="highlight-serif" data-i18n="heroTitleHighlight">Harvested at Sunrise.</span>
+          </h1>
+          <p class="hero-desc" data-i18n="heroDesc">
+            Directly from regenerative family orchards to your doorstep in 24 hours. Zero synthetic pesticides, maximum Brix sweetness, and complete soil-to-table traceability.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#products" class="btn btn-primary btn-lg">
+              <span data-i18n="heroCtaShop">Shop Today's Harvest</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <a href="#box-builder" class="btn btn-outline btn-lg">
+              <span data-i18n="heroCtaBox">Build Custom Box</span>
+            </a>
+          </div>
+
+          <div class="hero-stats-row">
+            <div class="stat-item">
+              <h4 data-i18n="statOrchardsVal">50+</h4>
+              <p data-i18n="statOrchardsLbl">Certified Bio-Orchards</p>
+            </div>
+            <div class="stat-item">
+              <h4 data-i18n="statDeliveryVal">&lt; 24h</h4>
+              <p data-i18n="statDeliveryLbl">Branch-to-Doorstep</p>
+            </div>
+            <div class="stat-item">
+              <h4 data-i18n="statZeroChemVal">100%</h4>
+              <p data-i18n="statZeroChemLbl">Zero Synthetic Chemicals</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-card-showcase">
+            <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1000&q=80" alt="Fresh Organic Fruit Basket" class="hero-main-img">
+            
+            <div class="hero-floating-card floating-card-1">
+              <div style="font-size: 1.8rem;">🍓</div>
+              <div>
+                <strong style="font-size: 0.85rem; display: block; color: var(--color-primary-900);">Coastal Strawberries</strong>
+                <span style="font-size: 0.75rem; color: var(--color-success); font-weight: 700;">★ 4.9 &bull; Peak Brix 14°</span>
+              </div>
+            </div>
+
+            <div class="hero-floating-card floating-card-2">
+              <div style="font-size: 1.8rem;">📦</div>
+              <div>
+                <strong style="font-size: 0.85rem; display: block; color: var(--color-primary-900);">Cold-Chain Protected</strong>
+                <span style="font-size: 0.75rem; color: var(--color-text-secondary);">100% Recyclable Plant Packaging</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust / Value Pillars Section -->
+  <section class="section section--sand" style="padding-top: var(--space-2xl); padding-bottom: var(--space-2xl);">
+    <div class="container">
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon-box">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <h3 data-i18n="pillar1Title">100% USDA Certified</h3>
+          <p data-i18n="pillar1Desc">Every single fruit is independently verified organic, non-GMO, and free of synthetic waxes.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <h3 data-i18n="pillar2Title">24-Hour Cold Chain</h3>
+          <p data-i18n="pillar2Desc">Picked at sunrise, insulated in eco plant-felt, and delivered chilled for peak antioxidant potency.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <h3 data-i18n="pillar3Title">Batch Traceability</h3>
+          <p data-i18n="pillar3Desc">Scan your lot number to meet the exact farmer, inspect soil vitality, and view harvest time.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <h3 data-i18n="pillar4Title">Taste & Freshness Guarantee</h3>
+          <p data-i18n="pillar4Desc">If any piece doesn't meet your highest culinary standards, we credit or replace it immediately.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Custom Fruit Box Builder Section -->
+  <section class="section" id="box-builder">
+    <div class="container">
+      <div class="section-header">
+        <span class="tagline" data-i18n="boxTagline">Personalized Harvest</span>
+        <h2 data-i18n="boxTitle">Build Your Custom Seasonal Fruit Box</h2>
+        <p data-i18n="boxSubtitle">Choose your box capacity, hand-select your favorite orchard picks, and enjoy up to 15% subscriber savings with flexible weekly delivery.</p>
+      </div>
+
+      <div class="box-builder-card">
+        <!-- Step 1: Tier Selection -->
+        <h3 style="font-size: 1.15rem; font-family: var(--font-display); margin-bottom: var(--space-md);" data-i18n="step1Title">1. Choose Box Tier</h3>
+        <div class="box-tier-grid">
+          <div class="tier-option-card" data-tier="solo">
+            <h4 class="tier-title" data-i18n="tierSoloTitle">Solo Orchard</h4>
+            <p class="tier-capacity" data-i18n="tierSoloCap">5 lbs Capacity</p>
+            <div class="tier-price">$29.00 <span data-i18n="perBox">/ box</span></div>
+            <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 8px;" data-i18n="tierSoloDesc">Perfect for individual daily fresh snacking</p>
+          </div>
+
+          <div class="tier-option-card selected" data-tier="family">
+            <span class="tier-popular-tag" data-i18n="tierFamilyPopular">Most Popular</span>
+            <h4 class="tier-title" data-i18n="tierFamilyTitle">Family Harvest</h4>
+            <p class="tier-capacity" data-i18n="tierFamilyCap">10 lbs Capacity</p>
+            <div class="tier-price">$49.00 <span data-i18n="perBox">/ box</span></div>
+            <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 8px;" data-i18n="tierFamilyDesc">Ideal for households & daily smoothies</p>
+          </div>
+
+          <div class="tier-option-card" data-tier="connoisseur">
+            <h4 class="tier-title" data-i18n="tierConnoisseurTitle">Exotic Connoisseur</h4>
+            <p class="tier-capacity" data-i18n="tierConnoisseurCap">15 lbs Capacity</p>
+            <div class="tier-price">$74.00 <span data-i18n="perBox">/ box</span></div>
+            <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 8px;" data-i18n="tierConnoisseurDesc">Includes rare exotic & heirloom selections</p>
+          </div>
+        </div>
+
+        <!-- Box Meter Progress Bar -->
+        <div class="box-meter-wrap">
+          <div class="meter-header">
+            <span data-i18n="meterStatusTitle">Box Capacity Status</span>
+            <span id="boxMeterText" style="color: var(--color-primary-700);">0 / 10 lbs filled</span>
+          </div>
+          <div class="meter-track">
+            <div class="meter-fill" id="boxMeterFill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Step 2: Fruit Selection Grid -->
+        <h3 style="font-size: 1.15rem; font-family: var(--font-display); margin-bottom: var(--space-md);" data-i18n="step2Title">2. Customize Your Fruit Varieties (~1 lb portions)</h3>
+        <div class="builder-fruit-grid" id="builderFruitSelector">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Step 3: Cadence & Add to Cart -->
+        <div style="background: var(--color-accent-sand); border-radius: var(--radius-lg); padding: var(--space-lg); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-md);">
+          <div>
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--color-primary-900); display: block; margin-bottom: 6px;" data-i18n="step3Title">3. Delivery Cadence:</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-primary btn-sm cadence-btn active" data-cadence="weekly" data-i18n="cadenceWeekly">Weekly (Save 15%)</button>
+              <button class="btn btn-outline btn-sm cadence-btn" data-cadence="biweekly" data-i18n="cadenceBiweekly">Bi-Weekly (Save 10%)</button>
+              <button class="btn btn-outline btn-sm cadence-btn" data-cadence="onetime" data-i18n="cadenceOnetime">One-Time Only</button>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: var(--space-lg);">
+            <div style="text-align: right;">
+              <span style="font-size: 0.8rem; color: var(--color-text-muted); display: block;" data-i18n="calculatedBoxTotal">Calculated Box Total</span>
+              <span class="price-main" id="builderBoxPrice" style="font-size: 1.6rem;">$41.65</span>
+            </div>
+            <button class="btn btn-primary btn-lg" id="addCustomBoxToCartBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+              <span data-i18n="btnAddBoxToCart">Add Box to Cart</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Curated Product Catalog Section -->
+  <section class="section section--sand" id="products">
+    <div class="container">
+      <div class="section-header">
+        <span class="tagline" data-i18n="catalogTagline">Daily Orchard Harvest</span>
+        <h2 data-i18n="catalogTitle">Explore Peak Season Organic Fruits</h2>
+        <p data-i18n="catalogSubtitle">Sun-ripened, hand-sorted for natural brix sweetness, and delivered at the peak of freshness.</p>
+      </div>
+
+      <div class="catalog-layout">
+        <!-- Sidebar Filters -->
+        <aside class="catalog-sidebar">
+          <!-- Category Nav -->
+          <div class="filter-group">
+            <h3 class="filter-title" data-i18n="filterCategories">Categories</h3>
+            <div class="category-nav-list">
+              <button class="category-btn active" data-category="all">
+                <span data-i18n="catAll">All Fruits</span>
+                <span class="category-count">12</span>
+              </button>
+              <button class="category-btn" data-category="berries">
+                <span data-i18n="catBerries">Berries & Cherries</span>
+                <span class="category-count">3</span>
+              </button>
+              <button class="category-btn" data-category="citrus">
+                <span data-i18n="catCitrus">Citrus & Immunity</span>
+                <span class="category-count">2</span>
+              </button>
+              <button class="category-btn" data-category="tropical">
+                <span data-i18n="catTropical">Tropical & Exotic</span>
+                <span class="category-count">3</span>
+              </button>
+              <button class="category-btn" data-category="orchard">
+                <span data-i18n="catOrchard">Orchard Classics</span>
+                <span class="category-count">2</span>
+              </button>
+              <button class="category-btn" data-category="bundles">
+                <span data-i18n="catBundles">Curated Harvest Boxes</span>
+                <span class="category-count">2</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Diet & Health Goals -->
+          <div class="filter-group">
+            <h3 class="filter-title" data-i18n="filterNutrition">Nutritional Focus</h3>
+            <div class="filter-tags-grid">
+              <label class="filter-tag-pill">
+                <input type="checkbox" class="diet-checkbox" value="vit-c">
+                <span data-i18n="dietVitC">High Vitamin C</span>
+              </label>
+              <label class="filter-tag-pill">
+                <input type="checkbox" class="diet-checkbox" value="detox">
+                <span data-i18n="dietDetox">Antioxidant Detox</span>
+              </label>
+              <label class="filter-tag-pill">
+                <input type="checkbox" class="diet-checkbox" value="keto">
+                <span data-i18n="dietKeto">Keto Friendly</span>
+              </label>
+              <label class="filter-tag-pill">
+                <input type="checkbox" class="diet-checkbox" value="low-sugar">
+                <span data-i18n="dietLowSugar">Low Glycemic</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Price Range Slider -->
+          <div class="filter-group">
+            <h3 class="filter-title" data-i18n="filterMaxPrice">Max Price</h3>
+            <div class="price-slider-wrap">
+              <input type="range" class="price-range-slider" id="priceRangeSlider" min="4" max="50" step="1" value="50">
+              <div class="price-display">
+                <span>$4</span>
+                <span id="maxPriceDisplay" style="color: var(--color-primary-800); font-weight: 800;">$50</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-outline btn-block btn-sm" onclick="window.catalogManager.resetFilters()" data-i18n="clearFilters">
+            Clear All Filters
+          </button>
+        </aside>
+
+        <!-- Product Grid & Toolbar Area -->
+        <main class="catalog-main">
+          <div class="catalog-toolbar">
+            <div class="active-filter-chips" id="activeFilterChips">
+              <!-- Rendered chips -->
+            </div>
+
+            <div class="sort-select-wrap">
+              <label for="catalogSortSelect" data-i18n="sortByLbl">Sort by:</label>
+              <select id="catalogSortSelect" class="sort-select">
+                <option value="popular">Most Popular</option>
+                <option value="rating">Highest Rating</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Dynamic Products Grid -->
+          <div class="products-grid" id="productsGrid">
+            <!-- Populated dynamically by catalog.js -->
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Farm Traceability Passport Section -->
+  <section class="section section--emerald" id="traceability">
+    <div class="container">
+      <div class="section-header section-header--light">
+        <span class="tagline" data-i18n="traceTagline">Radical Transparency</span>
+        <h2 data-i18n="traceTitle">Trace Your Fruit Directly to the Soil</h2>
+        <p data-i18n="traceSubtitle">Every harvest box and fruit punnet carries a unique Batch ID. Enter your batch number or test sample batches below to inspect the living soil reports and grower bio.</p>
+      </div>
+
+      <div style="max-width: 600px; margin: 0 auto 32px auto; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 12px; border-radius: var(--radius-full); display: flex; gap: 8px;">
+        <input type="text" id="batchLookupInput" placeholder="Enter Batch ID (e.g. OR-9428-BLU, WA-7829-RAINIER)" data-i18n-placeholder="batchInputPlaceholder" style="flex-grow: 1; padding: 10px 20px; color: #fff; font-size: 1rem;" aria-label="Batch ID">
+        <button class="btn btn-secondary" id="lookupBatchBtn" data-i18n="traceBatchBtn">Trace Batch</button>
+      </div>
+
+      <!-- Quick sample pills -->
+      <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; font-size: 0.85rem;">
+        <span style="color: #cfe5d8;" data-i18n="sampleBatchesLbl">Sample live batches:</span>
+        <button class="cert-pill" onclick="window.modalManager.openTraceability('OR-9428-BLU')">#OR-9428-BLU (Hood River Blueberries)</button>
+        <button class="cert-pill" onclick="window.modalManager.openTraceability('WA-7829-RAINIER')">#WA-7829-RAINIER (Rainier Cherries)</button>
+        <button class="cert-pill" onclick="window.modalManager.openTraceability('HI-8831-PITAYA')">#HI-8831-PITAYA (Hawaii Dragon Fruit)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why PureHarvest: Soil-to-Door Experience -->
+  <section class="section" id="our-story">
+    <div class="container">
+      <div class="section-header">
+        <span class="tagline" data-i18n="storyTagline">The PureHarvest Way</span>
+        <h2 data-i18n="storyTitle">How We Re-engineered Fresh Fruit Delivery</h2>
+        <p data-i18n="storySubtitle">Standard supermarket fruit sits in cold storage for months. We pick tree-ripened fruits daily for maximum flavor and bioactive nutrients.</p>
+      </div>
+
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon-box">01</div>
+          <h3 data-i18n="story1Title">Living Soil & Sunlight</h3>
+          <p data-i18n="story1Desc">Our network of family farms feeds regenerative mycorrhizal fungi and compost rather than chemical fertilizers.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box">02</div>
+          <h3 data-i18n="story2Title">Harvest at Peak Brix</h3>
+          <p data-i18n="story2Desc">Fruits are checked with digital refractometers for natural sugar balance and picked when 100% tree-ripened.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box">03</div>
+          <h3 data-i18n="story3Title">Gentle QC & Eco-Wrap</h3>
+          <p data-i18n="story3Desc">Hand-sorted in natural daylight and cushioned in 100% biodegradable plant fibers without synthetic wax sprays.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box">04</div>
+          <h3 data-i18n="story4Title">Electric Van to Door</h3>
+          <p data-i18n="story4Desc">Delivered in cold-refrigerated electric vehicles within 24 hours of harvest to preserve delicate vitamins.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Reviews & Testimonials -->
+  <section class="section section--sand" id="reviews">
+    <div class="container">
+      <div class="section-header">
+        <span class="tagline" data-i18n="reviewsTagline">From Our Fruit Lovers</span>
+        <h2 data-i18n="reviewsTitle">Loved by 12,000+ Conscious Foodies</h2>
+        <p data-i18n="reviewsSubtitle">Read why top culinary chefs, nutritionists, and families trust PureHarvest every week.</p>
+      </div>
+
+      <div class="pillars-grid" id="testimonialsGrid">
+        <!-- Populated by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Eco-Pledge & Newsletter Banner -->
+  <section class="section section--sage">
+    <div class="container">
+      <div style="background: var(--color-primary-800); border-radius: var(--radius-xl); padding: var(--space-3xl); color: #fff; display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-2xl); align-items: center;">
+        <div>
+          <span style="background: rgba(255, 255, 255, 0.15); color: #72ebb0; padding: 4px 12px; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 700; text-transform: uppercase;" data-i18n="newsletterPledge">One Tree Planted Per Box</span>
+          <h2 style="color: #fff; font-size: 2.2rem; font-family: var(--font-display); margin-top: 10px; margin-bottom: 12px;" data-i18n="newsletterTitle">Join the PureHarvest Circle</h2>
+          <p style="color: #cde2d6; font-size: 1rem; line-height: 1.6;" data-i18n="newsletterSubtitle">Subscribe for weekly harvest calendars, secret seasonal fruit drops, and get 20% off your very first organic box.</p>
+        </div>
+
+        <div>
+          <form id="newsletterForm" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <input type="email" placeholder="Enter your email address" data-i18n-placeholder="newsletterEmailPlaceholder" required style="flex-grow: 1; min-width: 240px; background: #fff; padding: 14px 20px; border-radius: var(--radius-full); color: var(--color-primary-900); font-size: 0.95rem;">
+            <button type="submit" class="btn btn-secondary btn-lg" data-i18n="newsletterBtn">Subscribe</button>
+          </form>
+          <p style="font-size: 0.75rem; color: #a3c7b2; margin-top: 8px;" data-i18n="newsletterSpamNote">No spam ever. Unsubscribe with 1-click anytime.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand">
+          <a href="#" class="brand-logo" style="color: #fff;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#72ebb0" stroke-width="2.2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="M12 8a3 3 0 1 0 0 6 3 3 0 1 0 0-6z"></path>
+            </svg>
+            <span>Pure<span style="color: #72ebb0;">Harvest</span></span>
+          </a>
+          <p data-i18n="footerDesc">Pioneering regenerative organic fruit agriculture with 24-hour cold-chain direct delivery from America's finest family orchards.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-icon-link" aria-label="Instagram">IG</a>
+            <a href="#" class="social-icon-link" aria-label="Twitter">TW</a>
+            <a href="#" class="social-icon-link" aria-label="Facebook">FB</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footerShopTitle">Shop Harvest</h4>
+          <ul>
+            <li><a href="#products" data-i18n="catBerries">Seasonal Berries</a></li>
+            <li><a href="#products" data-i18n="catCitrus">Immunity Citrus</a></li>
+            <li><a href="#products" data-i18n="catTropical">Exotic & Heirloom</a></li>
+            <li><a href="#box-builder" data-i18n="navBoxBuilder">Custom Fruit Box</a></li>
+            <li><a href="#products" data-i18n="catBundles">Curated Bundles</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footerTraceTitle">Traceability & Trust</h4>
+          <ul>
+            <li><a href="#traceability" data-i18n="navPassport">Farm Passport Lookup</a></li>
+            <li><a href="#our-story" data-i18n="storyTagline">Regenerative Soil Practices</a></li>
+            <li><a href="#reviews" data-i18n="navReviews">Customer Stories</a></li>
+            <li><a href="#">B-Corp Certification</a></li>
+            <li><a href="#">Cold-Chain Logistics</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footerHelpTitle">Freshness Assistance</h4>
+          <ul>
+            <li><a href="#">support@pureharvestorganics.com</a></li>
+            <li><a href="#">1-800-PURE-FRUIT</a></li>
+            <li><a href="#">Delivery Coverage Map</a></li>
+            <li><a href="#">100% Freshness Guarantee</a></li>
+            <li><a href="#">FAQ & Help Center</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div data-i18n="footerCopyright">
+          &copy; 2026 PureHarvest Organics Inc. All Rights Reserved. Artisanal & Regenerative.
+        </div>
+        <div class="certifications-badge-row">
+          <span class="cert-pill">USDA Organic</span>
+          <span class="cert-pill">Non-GMO Verified</span>
+          <span class="cert-pill">100% Carbon Neutral</span>
+          <span class="cert-pill">Living Wage Certified</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Slide-Over Shopping Cart Drawer Component -->
+  <div class="drawer-backdrop" id="cartDrawerBackdrop">
+    <div class="cart-drawer" id="cartDrawer">
+      <div class="drawer-header">
+        <h3 data-i18n="basketTitle">Your Harvest Basket</h3>
+        <button class="close-drawer-btn" data-close-cart aria-label="Close basket">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <!-- Free Shipping Tracker -->
+      <div class="free-shipping-tracker">
+        <div class="free-shipping-text" id="freeShippingProgressText">Add <strong>$50.00</strong> more for <strong>Free Shipping</strong></div>
+        <div class="shipping-bar-track">
+          <div class="shipping-bar-fill" id="freeShippingProgressBar" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- Items List -->
+      <div class="cart-items-body" id="cartItemsList">
+        <!-- Rendered by cart.js -->
+      </div>
+
+      <!-- Drawer Footer Summary -->
+      <div class="drawer-footer">
+        <div class="promo-row">
+          <input type="text" id="promoCodeInput" class="promo-input" placeholder="Promo code (e.g. FRESH20)" data-i18n-placeholder="promoInputPlaceholder">
+          <button class="btn btn-outline btn-sm" id="applyPromoBtn" data-i18n="promoApplyBtn">Apply</button>
+        </div>
+
+        <div class="cart-subtotal-row">
+          <span data-i18n="cartSubtotal">Subtotal:</span>
+          <strong id="cartSubtotalPrice">$0.00</strong>
+        </div>
+
+        <div class="cart-subtotal-row" id="cartDiscountRow" style="display: none; color: var(--color-success);">
+          <span data-i18n="cartDiscount">Promo Discount:</span>
+          <strong id="cartDiscountPrice">-$0.00</strong>
+        </div>
+
+        <div class="cart-subtotal-row">
+          <span data-i18n="cartShipping">Cold-Chain Shipping:</span>
+          <strong id="cartShippingPrice">$6.99</strong>
+        </div>
+
+        <div class="cart-total-row">
+          <span data-i18n="cartTotal">Estimated Total:</span>
+          <span id="cartTotalPrice">$0.00</span>
+        </div>
+
+        <button class="btn btn-primary btn-block btn-lg" id="openCheckoutBtn">
+          <span data-i18n="cartProceedBtn">Proceed to Delivery &rarr;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick-View Modal Overlay -->
+  <div class="modal-overlay" id="quickViewModalOverlay">
+    <div class="modal-container" id="quickViewContainer">
+      <!-- Injected by modal.js -->
+    </div>
+  </div>
+
+  <!-- Comparison Modal Overlay -->
+  <div class="modal-overlay" id="compareModalOverlay">
+    <div class="modal-container" id="compareContainer">
+      <!-- Injected by modal.js -->
+    </div>
+  </div>
+
+  <!-- Farm Traceability Modal Overlay -->
+  <div class="modal-overlay" id="traceModalOverlay">
+    <div class="modal-container" id="traceContainer">
+      <!-- Injected by modal.js -->
+    </div>
+  </div>
+
+  <!-- Multi-Step Checkout Modal Overlay -->
+  <div class="modal-overlay" id="checkoutModalOverlay">
+    <div class="modal-container" id="checkoutModalContainer" style="max-width: 650px;">
+      <!-- Injected by checkout.js -->
+    </div>
+  </div>
+
+  <!-- Instant Search Modal Overlay -->
+  <div class="modal-overlay" id="searchModalOverlay">
+    <div class="modal-container" style="max-width: 600px; padding: 0; overflow: hidden;">
+      <div class="search-input-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="searchModalInputField" class="search-input-field" placeholder="Search berries, citrus, farms, keto..." data-i18n-placeholder="searchModalPlaceholder">
+        <button class="modal-close-btn" onclick="window.app.closeSearchModal()" style="position: static;" aria-label="Close search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="search-results-container" id="searchModalResults">
+        <!-- Rendered results -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Fruit Comparison Trigger Button -->
+  <button id="compareFloatingBtn" onclick="window.modalManager.openComparison()" style="display: none; position: fixed; bottom: 24px; left: 24px; z-index: 150; background: var(--color-primary-900); color: #fff; padding: 12px 20px; border-radius: var(--radius-full); box-shadow: var(--shadow-lg); align-items: center; gap: 8px; font-weight: 700; cursor: pointer; border: 1px solid rgba(255,255,255,0.2);">
+    <span data-i18n="floatingCompareBtn">⚖️ Compare Fruits</span>
+    <span class="badge-count" id="compareCountBadge" style="background: var(--color-accent-peach); color: #fff; font-size: 0.75rem; padding: 2px 7px; border-radius: 50%;">0</span>
+  </button>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/catalog.js"></script>
+  <script src="js/box-builder.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
