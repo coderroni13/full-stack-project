@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Advanced Clinical & Hospital Management Platform - Real-time records, scheduling, billing, ward beds, and pharmacy systems.">
+  <title>MedOS - Smart Hospital Management System</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Chart.js for beautiful analytical dashboard representation -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">H+</div>
+        <span class="brand-name">MedOS Clinic</span>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li>
+          <a class="menu-item active" onclick="switchView('dashboard', this)">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"></rect><rect x="14" y="3" width="7" height="5" rx="1"></rect><rect x="14" y="12" width="7" height="9" rx="1"></rect><rect x="3" y="16" width="7" height="5" rx="1"></rect></svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a class="menu-item" onclick="switchView('patients', this)">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Patients</span>
+          </a>
+        </li>
+        <li>
+          <a class="menu-item" onclick="switchView('appointments', this)">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>Appointments</span>
+          </a>
+        </li>
+        <li>
+          <a class="menu-item" onclick="switchView('doctors', this)">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>Doctors</span>
+          </a>
+        </li>
+        <li>
+          <a class="menu-item" onclick="switchView('wards', this)">
+            <svg viewBox="0 0 24 24"><path d="M2 4h20v14H2z"></path><path d="M2 18v2h20v-2"></path><path d="M6 8h12"></path><path d="M6 12h8"></path></svg>
+            <span>Wards & Beds</span>
+          </a>
+        </li>
+        <li>
+          <a class="menu-item" onclick="switchView('billing', this)">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <span>Billing & Invoices</span>
+          </a>
+        </li>
+        <li>
+          <a class="menu-item" onclick="switchView('pharmacy', this)">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+            <span>Pharmacy Store</span>
+          </a>
+        </li>
+      </ul>
+      
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="avatar">SJ</div>
+          <div class="user-info">
+            <span class="user-name">Dr. S. Jenkins</span>
+            <span class="user-role">Administrator</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN APP WRAPPER -->
+    <main class="main-content">
+      
+      <!-- TOP HEADER -->
+      <header class="header">
+        <div class="header-search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="globalSearchInput" placeholder="Search patients, invoices, drugs..." oninput="triggerGlobalSearch()">
+        </div>
+        
+        <div class="header-actions">
+          <!-- Notification Bell -->
+          <button class="action-btn" onclick="toggleAlertsList()" title="System Alerts">
+            <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <span class="badge-dot" id="alertNotificationBadge"></span>
+          </button>
+          
+          <!-- Theme Toggle -->
+          <button class="action-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+            <svg viewBox="0 0 24 24" id="themeToggleIcon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          
+          <!-- Quick Status Indicator -->
+          <span class="badge success" style="height: 32px;">System Online</span>
+        </div>
+      </header>
+
+      <!-- PAGE WRAPPER -->
+      <div class="page-container">
+        
+        <!-- SECTION 1: DASHBOARD -->
+        <section id="view-dashboard" class="view-section active-view">
+          <div class="page-header">
+            <div class="page-title">
+              <h1 id="dashboard-welcome">Good afternoon, Admin</h1>
+              <p>Here is your general clinic overview for today.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('modalPatient')">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Quick Admit
+            </button>
+          </div>
+          
+          <!-- Stat Grid -->
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-icon primary">
+                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+              </div>
+              <div class="stat-details">
+                <span class="stat-value" id="stat-total-patients">0</span>
+                <span class="stat-label">Admitted Patients</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-icon success">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              </div>
+              <div class="stat-details">
+                <span class="stat-value" id="stat-appointments">0</span>
+                <span class="stat-label">Appointments Today</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-icon info">
+                <svg viewBox="0 0 24 24"><path d="M2 4h20v14H2z"></path><path d="M6 8h12"></path></svg>
+              </div>
+              <div class="stat-details">
+                <span class="stat-value" id="stat-bed-occupancy">0%</span>
+                <span class="stat-label">Bed Occupancy Rate</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-icon warning">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              </div>
+              <div class="stat-details">
+                <span class="stat-value" id="stat-revenue">$0.00</span>
+                <span class="stat-label">Pending Billing</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Dashboard charts & alerts -->
+          <div class="dashboard-grid">
+            <div class="card chart-card">
+              <div class="chart-header">
+                <h3>Patient Admissions Trend</h3>
+                <span class="badge info">Weekly</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="admissionsChart"></canvas>
+              </div>
+            </div>
+            
+            <div class="card" style="display: flex; flex-direction: column; gap: 16px;">
+              <div class="chart-header" style="margin-bottom: 0;">
+                <h3>System Notifications</h3>
+                <button class="btn btn-secondary" onclick="clearSystemNotifications()" style="padding: 4px 8px; font-size: 11px;">Clear</button>
+              </div>
+              <ul class="activity-list" id="systemNotificationsList">
+                <!-- Notifications populated by js -->
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Recent Admissions Table -->
+          <div class="card">
+            <div class="chart-header">
+              <h3>Recent Admissions</h3>
+              <a onclick="switchView('patients', document.querySelectorAll('.menu-item')[1])" class="btn btn-secondary" style="font-size: 11px; padding: 6px 12px; cursor: pointer;">View All</a>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Patient Name</th>
+                    <th>Age/Gender</th>
+                    <th>Condition</th>
+                    <th>Date Admitted</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardRecentAdmissions">
+                  <!-- JS Rendered -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: PATIENTS -->
+        <section id="view-patients" class="view-section">
+          <div class="page-header">
+            <div class="page-title">
+              <h1>Patient Registry</h1>
+              <p>Manage and log clinical patients and admission profiles.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('modalPatient')">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Admit New Patient
+            </button>
+          </div>
+          
+          <div class="view-actions-bar">
+            <div class="header-search" style="width: 320px;">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="patientSearchInput" placeholder="Filter patients by name or ID..." oninput="renderPatientsList()">
+            </div>
+            
+            <div class="filters-group">
+              <span style="font-size: 13px; font-weight:600; color: var(--text-secondary);">Sort By:</span>
+              <select class="form-control" id="patientSortSelect" style="width: 150px; padding: 6px 10px;" onchange="renderPatientsList()">
+                <option value="recent">Recently Added</option>
+                <option value="name">Alphabetical</option>
+                <option value="age">Age</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Patient ID</th>
+                    <th>Patient Name</th>
+                    <th>Age/Gender</th>
+                    <th>Contact No.</th>
+                    <th>Bed Allocation</th>
+                    <th>Vitals (Pulse/BP)</th>
+                    <th>Clinical Status</th>
+                    <th style="text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="patientsTableBody">
+                  <!-- JS Filled -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: APPOINTMENTS -->
+        <section id="view-appointments" class="view-section">
+          <div class="page-header">
+            <div class="page-title">
+              <h1>Appointment Scheduler</h1>
+              <p>Book consults and track out-patient scheduling records.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('modalAppointment')">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Book Appointment
+            </button>
+          </div>
+          
+          <div class="view-actions-bar">
+            <div class="filters-group">
+              <span style="font-size: 13px; font-weight:600; color: var(--text-secondary);">Doctor Filter:</span>
+              <select class="form-control" id="appointmentDoctorFilter" style="width: 200px; padding: 6px 10px;" onchange="renderAppointmentsList()">
+                <option value="all">All Doctors</option>
+                <!-- JS populated options -->
+              </select>
+            </div>
+            <div class="filters-group">
+              <span style="font-size: 13px; font-weight:600; color: var(--text-secondary);">Date:</span>
+              <input type="date" class="form-control" id="appointmentDateFilter" style="width: 160px; padding: 6px 10px;" onchange="renderAppointmentsList()">
+              <button class="btn btn-secondary" onclick="resetAppointmentFilters()" style="padding: 6px 10px;">Reset</button>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Appointment ID</th>
+                    <th>Patient Name</th>
+                    <th>Assigned Doctor</th>
+                    <th>Department</th>
+                    <th>Date & Time</th>
+                    <th>Reason for Visit</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="appointmentsTableBody">
+                  <!-- JS Filled -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: DOCTORS -->
+        <section id="view-doctors" class="view-section">
+          <div class="page-header">
+            <div class="page-title">
+              <h1>Doctor Directory</h1>
+              <p>Consultant profiles, clinical duties, and scheduling rosters.</p>
+            </div>
+          </div>
+          
+          <div class="ward-grid" id="doctorsCardsGrid">
+            <!-- JS populated cards -->
+          </div>
+        </section>
+
+        <!-- SECTION 5: WARDS & BEDS -->
+        <section id="view-wards" class="view-section">
+          <div class="page-header">
+            <div class="page-title">
+              <h1>Ward & Bed Status</h1>
+              <p>Interactive spatial mapping of department beds and current clinical allocations.</p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <span class="badge success">● Vacant</span>
+              <span class="badge info">● Occupied</span>
+              <span class="badge warning">● Maintenance</span>
+            </div>
+          </div>
+          
+          <!-- Ward container grid populated by JS -->
+          <div class="ward-grid" id="wardInteractiveContainers">
+            <!-- Wards (ICU, Pediatric, General, Emergency) JS populated -->
+          </div>
+        </section>
+
+        <!-- SECTION 6: BILLING -->
+        <section id="view-billing" class="view-section">
+          <div class="page-header">
+            <div class="page-title">
+              <h1>Billing & Invoices</h1>
+              <p>Issue patient claims, process insurance, and track receipt history.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('modalBilling')">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              New Invoice
+            </button>
+          </div>
+          
+          <!-- Invoice summary stats -->
+          <div class="stat-grid" style="margin-bottom: 8px;">
+            <div class="stat-card">
+              <div class="stat-icon success">
+                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div class="stat-details">
+                <span class="stat-value" id="billing-paid-total">$0.00</span>
+                <span class="stat-label">Collected Payments</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon danger">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              </div>
+              <div class="stat-details">
+                <span class="stat-value" id="billing-pending-total">$0.00</span>
+                <span class="stat-label">Outstanding Balance</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Invoice ID</th>
+                    <th>Patient Name</th>
+                    <th>Description</th>
+                    <th>Date Issued</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="billingTableBody">
+                  <!-- JS Filled -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: PHARMACY -->
+        <section id="view-pharmacy" class="view-section">
+          <div class="page-header">
+            <div class="page-title">
+              <h1>Pharmacy Inventory</h1>
+              <p>Dispense clinical medicine, monitor dosage stocks, and trigger restock alerts.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('modalPharmacyDispense')">
+              <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              Dispense Drug
+            </button>
+          </div>
+          
+          <div class="pharmacy-grid" id="pharmacyInventoryCards">
+            <!-- JS populated medicine cards -->
+          </div>
+        </section>
+        
+      </div>
+      
+    </main>
+    
+  </div>
+
+  <!-- MODAL: ADD/EDIT PATIENT -->
+  <div class="modal-overlay" id="modalPatient">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="patientModalTitle">Admit Patient</h3>
+        <button class="modal-close" onclick="closeModal('modalPatient')">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="patientForm" onsubmit="savePatient(event)">
+        <input type="hidden" id="patientFormId">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="pName">Patient Full Name *</label>
+            <input type="text" id="pName" class="form-control" placeholder="E.g., Jane Doe" required>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pAge">Age *</label>
+              <input type="number" id="pAge" class="form-control" placeholder="E.g., 34" min="0" required>
+            </div>
+            <div class="form-group">
+              <label for="pGender">Gender *</label>
+              <select id="pGender" class="form-control" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pPhone">Contact Phone *</label>
+              <input type="text" id="pPhone" class="form-control" placeholder="+1 (555) 123-4567" required>
+            </div>
+            <div class="form-group">
+              <label for="pStatus">Clinical Status</label>
+              <select id="pStatus" class="form-control">
+                <option value="In Treatment">In Treatment</option>
+                <option value="Critical">Critical</option>
+                <option value="Observation">Observation</option>
+                <option value="Discharged">Discharged</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pPulse">Pulse Rate (bpm)</label>
+              <input type="number" id="pPulse" class="form-control" placeholder="E.g., 72" min="0">
+            </div>
+            <div class="form-group">
+              <label for="pBP">Blood Pressure (mmHg)</label>
+              <input type="text" id="pBP" class="form-control" placeholder="E.g., 120/80">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="pCondition">Admitted Diagnosis / Medical Condition</label>
+            <input type="text" id="pCondition" class="form-control" placeholder="E.g., Acute Appendicitis" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="pWard">Assign Ward Room</label>
+            <select id="pWard" class="form-control">
+              <option value="none">Outpatient (No bed assignment)</option>
+              <option value="ICU">Intensive Care Unit (ICU)</option>
+              <option value="General">General Ward</option>
+              <option value="Pediatrics">Pediatrics Department</option>
+              <option value="Emergency">Emergency Room</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modalPatient')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Admission</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: BOOK APPOINTMENT -->
+  <div class="modal-overlay" id="modalAppointment">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>Book Consultant Appointment</h3>
+        <button class="modal-close" onclick="closeModal('modalAppointment')">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="appointmentForm" onsubmit="saveAppointment(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="aPatient">Select Patient *</label>
+            <select id="aPatient" class="form-control" required>
+              <!-- JS populated with current patients -->
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="aDoctor">Select Medical Doctor *</label>
+            <select id="aDoctor" class="form-control" required>
+              <!-- JS populated with doctors -->
+            </select>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="aDate">Appointment Date *</label>
+              <input type="date" id="aDate" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="aTime">Time Slot *</label>
+              <input type="time" id="aTime" class="form-control" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="aReason">Clinical Complaint / Visit Reason</label>
+            <input type="text" id="aReason" class="form-control" placeholder="E.g., Routine cardiac follow-up" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modalAppointment')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Schedule Booking</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: NEW INVOICE -->
+  <div class="modal-overlay" id="modalBilling">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>Generate Medical Invoice</h3>
+        <button class="modal-close" onclick="closeModal('modalBilling')">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="billingForm" onsubmit="saveInvoice(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="bPatient">Select Patient *</label>
+            <select id="bPatient" class="form-control" required>
+              <!-- Patients list -->
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="bDesc">Billing Description *</label>
+            <input type="text" id="bDesc" class="form-control" placeholder="E.g., ICU Care & Cardiac Monitoring (3 days)" required>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bAmount">Total Charge Amount ($) *</label>
+              <input type="number" id="bAmount" class="form-control" placeholder="0.00" min="0" step="0.01" required>
+            </div>
+            <div class="form-group">
+              <label for="bStatus">Payment Status</label>
+              <select id="bStatus" class="form-control">
+                <option value="Pending">Unpaid / Pending</option>
+                <option value="Paid">Paid in Full</option>
+                <option value="Insured">Insurance Claiming</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modalBilling')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Generate Invoice</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: DISPENSE DRUG -->
+  <div class="modal-overlay" id="modalPharmacyDispense">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>Dispense Medicine From Stock</h3>
+        <button class="modal-close" onclick="closeModal('modalPharmacyDispense')">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="dispenseForm" onsubmit="saveDispense(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="dDrug">Select Medicine *</label>
+            <select id="dDrug" class="form-control" required>
+              <!-- Populated by JS -->
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="dPatient">Patient Name *</label>
+            <select id="dPatient" class="form-control" required>
+              <!-- Populated with Patients -->
+            </select>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="dQty">Dispense Quantity *</label>
+              <input type="number" id="dQty" class="form-control" min="1" max="1000" placeholder="10" required>
+            </div>
+            <div class="form-group">
+              <label for="dInstructions">Dosage Instructions</label>
+              <input type="text" id="dInstructions" class="form-control" placeholder="E.g., Twice daily after meals" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modalPharmacyDispense')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Dispense & Log</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: BED ACTIONS (BED ALLOCATION DETAILS) -->
+  <div class="modal-overlay" id="modalBedAction">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="bedModalTitle">Bed Management</h3>
+        <button class="modal-close" onclick="closeModal('modalBedAction')">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="bedActionWardId">
+        <input type="hidden" id="bedActionIndex">
+        
+        <div class="card" style="margin-bottom: 20px; background-color: var(--bg-tertiary);">
+          <div style="font-weight: 700; font-size: 14px; margin-bottom: 6px;" id="bedActionDetailsTitle">Bed Location</div>
+          <div style="font-size: 13px; color: var(--text-secondary);" id="bedActionDetailsStatus">Status: Vacant</div>
+        </div>
+        
+        <!-- Toggle Status Options -->
+        <div class="form-group">
+          <label for="bedStatusDropdown">Update Bed Mode</label>
+          <select id="bedStatusDropdown" class="form-control" onchange="toggleBedAssignDropdown()">
+            <option value="vacant">Available / Vacant</option>
+            <option value="occupied">Occupied by Patient</option>
+            <option value="maintenance">Under Maintenance</option>
+          </select>
+        </div>
+        
+        <!-- Conditional Patient Select -->
+        <div class="form-group" id="bedPatientAssignGroup" style="display: none;">
+          <label for="bedPatientSelect">Assign Admitted Patient</label>
+          <select id="bedPatientSelect" class="form-control">
+            <!-- Filled by JS -->
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modalBedAction')">Close</button>
+        <button class="btn btn-primary" onclick="saveBedAction()">Apply Status Change</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PRINT PREVIEW / RECEIPT -->
+  <div class="modal-overlay" id="modalReceipt">
+    <div class="modal-container" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3>Invoice Receipt Details</h3>
+        <button class="modal-close" onclick="closeModal('modalReceipt')">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="receiptContainer">
+          <!-- Populated by JS in invoice-print-container layout -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modalReceipt')">Close</button>
+        <button class="btn btn-primary" onclick="printReceiptContent()">
+          <svg viewBox="0 0 24 24" style="stroke: currentColor;"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Print Receipt
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
