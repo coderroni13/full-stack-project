@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bangladesh Bank — Secure digital banking dashboard for managing your account, deposits, withdrawals and transfers.">
+    <title>Bangladesh Bank — Executive Dashboard</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+    <!-- ── Top Navigation Bar ───────────────────────────── -->
+    <nav class="dashboard-nav">
+        <div class="nav-brand">BANGLADESH BANK</div>
+
+        <div class="nav-user">
+            <div class="user-badge">
+                <div class="user-avatar" id="userAvatarInitial">13</div>
+                <div class="user-info">
+                    <span class="user-info-name" id="userDisplayName">RonyTalukder</span>
+                    <span class="user-info-email d-block" id="navUserEmail">user@bb.org.bd</span>
+                </div>
+            </div>
+            <button onclick="logoutUser()" class="logout-btn" id="logoutBtn">Log Out</button>
+        </div>
+    </nav>
+
+    <!-- ── Main Dashboard Grid ──────────────────────────── -->
+    <div class="dashboard-main" id="dashboard-content">
+
+        <!-- ── LEFT COLUMN ──────────────────────────────── -->
+        <div class="left-column">
+
+            <!-- Virtual Credit Card -->
+            <div class="card-wrapper">
+                <div class="credit-card">
+                    <div class="card-top">
+                        <span class="card-logo">BANGLADESH BANK</span>
+                        <div class="card-chip"></div>
+                    </div>
+                    <div class="card-middle">
+                        <div class="card-balance-lbl">Available Balance</div>
+                        <div class="card-balance" id="cardBalanceVal">৳0.00</div>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="card-number" id="cardAccountNumber">0000 0000 00</div>
+                        <div class="card-holder" id="cardHolderName">Account Holder</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operations Box: Deposit / Withdraw / Transfer -->
+            <div class="glass-panel action-card">
+                <div class="operations-tabs">
+                    <button class="operation-tab-btn active" data-op="deposit" id="tabDeposit">Deposit</button>
+                    <button class="operation-tab-btn" data-op="withdraw" id="tabWithdraw">Withdraw</button>
+                    <button class="operation-tab-btn" data-op="transfer" id="tabTransfer">Send Money</button>
+                </div>
+
+                <!-- Deposit Form -->
+                <div class="op-form-container active" id="depositContainer">
+                    <form id="depositForm">
+                        <div class="form-group">
+                            <label class="form-label" for="depositAmount">Amount to Deposit</label>
+                            <input type="number" id="depositAmount" class="form-input"
+                                   placeholder="0.00" step="0.01" min="0.01" required>
+                            <div class="amount-shortcut-grid">
+                                <button type="button" class="shortcut-btn" data-val="500"  data-target="depositAmount">+৳500</button>
+                                <button type="button" class="shortcut-btn" data-val="1000" data-target="depositAmount">+৳1,000</button>
+                                <button type="button" class="shortcut-btn" data-val="5000" data-target="depositAmount">+৳5,000</button>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="depositSubmitBtn">Process Deposit</button>
+                    </form>
+                </div>
+
+                <!-- Withdraw Form -->
+                <div class="op-form-container" id="withdrawContainer">
+                    <form id="withdrawForm">
+                        <div class="form-group">
+                            <label class="form-label" for="withdrawAmount">Amount to Withdraw</label>
+                            <input type="number" id="withdrawAmount" class="form-input"
+                                   placeholder="0.00" step="0.01" min="0.01" required>
+                            <div class="amount-shortcut-grid">
+                                <button type="button" class="shortcut-btn" data-val="500"  data-target="withdrawAmount">৳500</button>
+                                <button type="button" class="shortcut-btn" data-val="1000" data-target="withdrawAmount">৳1,000</button>
+                                <button type="button" class="shortcut-btn" data-val="2000" data-target="withdrawAmount">৳2,000</button>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="withdrawSubmitBtn">Process Withdrawal</button>
+                    </form>
+                </div>
+
+                <!-- Transfer Form -->
+                <div class="op-form-container" id="transferContainer">
+                    <form id="transferForm">
+                      
+                        <div class="form-group">
+                            <label class="form-label" for="transferRecipient">Recipient Account / Email</label>
+                            <input type="text" id="transferRecipient" class="form-input"
+                                   placeholder="10-digit number or user email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="transferAmount">Amount to Transfer</label>
+                            <input type="number" id="transferAmount" class="form-input"
+                                   placeholder="0.00" step="0.01" min="0.01" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="transferSubmitBtn">Send Funds</button>
+                    </form>
+                </div>
+            </div>
+
+        </div><!-- /left-column -->
+
+        <!-- ── RIGHT COLUMN ─────────────────────────────── -->
+        <div class="right-column">
+
+            <!-- Stat Summary Strip -->
+            <div class="stat-strip">
+                <div class="stat-card green">
+                    <div class="stat-label">Current Balance</div>
+                    <div class="stat-value green" id="statBalance">৳0.00</div>
+                    <div class="stat-sub">Available funds</div>
+                    <span class="stat-icon">💳</span>
+                </div>
+                <div class="stat-card gold">
+                    <div class="stat-label">Total Deposited</div>
+                    <div class="stat-value gold" id="statDeposited">৳0.00</div>
+                    <div class="stat-sub">Lifetime inflow</div>
+                    <span class="stat-icon">📥</span>
+                </div>
+                <div class="stat-card rose">
+                    <div class="stat-label">Total Withdrawn</div>
+                    <div class="stat-value rose" id="statWithdrawn">৳0.00</div>
+                    <div class="stat-sub">Lifetime outflow</div>
+                    <span class="stat-icon">📤</span>
+                </div>
+            </div>
+
+            <!-- Balance Trend Chart -->
+            <div class="glass-panel analytics-panel">
+                <div class="panel-title">
+                    <div class="icon icon-green">📈</div>
+                    Balance Trend Analytics
+                </div>
+                <div class="analytics-meta">Chronological visualization of your account capital adjustments.</div>
+                <div class="chart-container">
+                    <canvas id="balanceChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Transactions Table -->
+            <div class="glass-panel transactions-panel">
+                <div class="tx-header-actions">
+                    <div class="panel-title" style="margin-bottom:0;border-bottom:none;padding-bottom:0;">
+                        <div class="icon icon-gold">📋</div>
+                        Recent Transactions
+                    </div>
+                    <div class="tx-filters">
+                        <button class="filter-chip active" data-filter="ALL"     id="filterAll">All</button>
+                        <button class="filter-chip"        data-filter="INFLOW"  id="filterInflow">Inflow</button>
+                        <button class="filter-chip"        data-filter="OUTFLOW" id="filterOutflow">Outflow</button>
+                    </div>
+                </div>
+
+                <div class="tx-table-container">
+                    <table class="tx-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Party</th>
+                                <th style="text-align:right;">Date & Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="txTableBody">
+                            <tr>
+                                <td colspan="4" class="empty-tx">Loading transaction history…</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div><!-- /right-column -->
+
+    </div><!-- /dashboard-main -->
+
+    <!-- ── Scripts ──────────────────────────────────────── -->
+    <script src="static/js/app.js"></script>
+    <script src="server/server.js"></script>
+    <script src="models/User.js"></script>
+    <script src="routes/bankRotes.js"></script>
+</body>
+</html>

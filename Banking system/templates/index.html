@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangladesh Bank - Digital Terminal</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>BANGLADESH BANK</h1>
+            <p id="authSubtitle">Access your digital banking terminal</p>
+        </div>
+
+        <div class="glass-panel" id="auth-card" style="padding: 2rem;">
+            <div class="tab-container">
+                <button class="tab-btn active" id="loginTab">Login</button>
+                <button class="tab-btn" id="registerTab">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+               
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-input" placeholder="user@bb.org.bd" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
+                    Sign In
+                </button>
+            </form>
+
+            <!-- Register Form (Hidden initially) -->
+            <form id="registerForm" style="display: none;">
+               
+                <div class="form-group">
+                    <label class="form-label">Display Name</label>
+                    <input type="text" id="regName" class="form-input" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" id="regEmail" class="form-input" placeholder="user@bb.org.bd" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="regPassword" class="form-input" placeholder="•••••••• (Min 6 characters)" minlength="6" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
+                    Create Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Features Info Section -->
+    <div class="hero-features">
+        <div class="glass-panel feature-card">
+            <span class="feature-icon">🛡️</span>
+            <h3>Bank-Grade Security</h3>
+            <p>Your passwords and transactions are encrypted using secure industry-standard PBKDF2 hash architecture.</p>
+        </div>
+        <div class="glass-panel feature-card">
+            <span class="feature-icon">⚡</span>
+            <h3>Instant P2P Transfers</h3>
+            <p>Send funds to any account number or email registered on Bangladesh Bank with real-time atomic execution.</p>
+        </div>
+        <div class="glass-panel feature-card">
+            <span class="feature-icon">📊</span>
+            <h3>Asset Visualization</h3>
+            <p>Track your financial growth over time with custom interactive analytical line charts generated instantly.</p>
+        </div>
+    </div>
+
+    <script src="static/js/app.js"></script>
+    <script src="server/server.js"></script>
+    <script src="models/User.js"></script>
+    <script src="routes/bankRotes.js"></script>
+</body>
+</html>
